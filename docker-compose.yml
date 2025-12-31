@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    container_name: giftflow-app
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      QUEUE_CONNECTION: sync
+      GIFTFLOW_WEBHOOK_SECRET: ${GIFTFLOW_WEBHOOK_SECRET:-local_giftflow_secret}
+    volumes:
+      - .:/var/www/html
+    command: php artisan serve --host=0.0.0.0 --port=8000
